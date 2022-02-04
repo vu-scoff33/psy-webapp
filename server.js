@@ -12,4 +12,4 @@ http
       }
     });
   })
-  .listen(4000);
+  .listen(process.env.PORT || 4000);
