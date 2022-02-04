@@ -1,0 +1,10 @@
+{
+  "name": "psych_webapp",
+  "version": "1.0.0",
+  "main": "server.js",
+  "author": "Vu Le <vu.amsandcoffee@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^17.0.14"
+  }
+}
