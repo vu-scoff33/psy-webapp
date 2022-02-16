@@ -30,6 +30,9 @@ document.getElementById("clear").onclick = function () {
 document.getElementById("undo").onclick = function () {
   DrawUtils.undo();
 };
+document.getElementById('save').onclick = function () {
+    window.location = document.getElementById("canvas").toDataURL('image/png');
+};
 
 const DrawUtils = {
   actionsHistory: [],
