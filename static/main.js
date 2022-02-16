@@ -31,7 +31,9 @@ document.getElementById("undo").onclick = function () {
   DrawUtils.undo();
 };
 document.getElementById('save').onclick = function () {
-    window.location = document.getElementById("demo-canvas").toDataURL('image/png');
+    //window.location = document.getElementById("demo-canvas").toDataURL('image/png');
+  var imgURL = document.getElementById("demo-canvas").toDataURL('image/png');
+  document.getElementById(‘cimg’).src = imgURL;
 };
 
 const DrawUtils = {
