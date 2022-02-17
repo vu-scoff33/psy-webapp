@@ -30,12 +30,16 @@ document.getElementById("clear").onclick = function () {
 document.getElementById("undo").onclick = function () {
   DrawUtils.undo();
 };
-document.getElementById('save').onclick = function () {
-    window.location = document.getElementById("canvas").toDataURL('image/png');
+document.getElementById("redo").onclick = function () {
+  DrawUtils.redo();
+};
+document.getElementById("save").onclick = function () {
+  window.location = document.getElementById("canvas").toDataURL("image/png");
 };
 
 const DrawUtils = {
   actionsHistory: [],
+  redoState: [],
   tip: function (x, y, withRecord) {
     context.beginPath();
     context.arc(x, y, 0.8, 0, 2 * Math.PI);
@@ -47,6 +51,7 @@ const DrawUtils = {
         y,
         action: "tip",
       });
+      this.resetRedoState();
     }
   },
   line: function (x, y, withRecord) {
@@ -58,6 +63,7 @@ const DrawUtils = {
         y,
         action: "line",
       });
+      this.resetRedoState();
     }
   },
   clear: function (withRecord) {
@@ -69,6 +75,7 @@ const DrawUtils = {
         y: null,
         action: "clear",
       });
+      this.resetRedoState();
     }
     // console.log(this.actionsHistory);
   },
@@ -94,8 +101,18 @@ const DrawUtils = {
     }
   },
   undo: function () {
+    if (!this.actionsHistory.length) return;
     context.clearRect(0, 0, canvas.width, canvas.height);
-    this.actionsHistory.pop();
+    this.redoState.push(this.actionsHistory.pop());
     this.redraw();
+    console.log(this.redoState);
+  },
+  redo: function () {
+    if (!this.redoState.length) return;
+    this.actionsHistory.push(this.redoState.pop());
+    this.redraw();
+  },
+  resetRedoState: function () {
+    this.redoState = [];
   },
 };
