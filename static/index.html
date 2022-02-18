@@ -3,15 +3,45 @@
   <head>
     <title>Psychology Research Webapp</title>
     <meta charset="utf-8" />
+    <style>
+      .tools-box {
+        display: flex;
+        justify-content: space-between;
+      }
+      .colors-button button {
+        width: 20px;
+        height: 100%;
+      }
+      #red {
+        background-color: red;
+      }
+      #blue {
+        background-color: blue;
+      }
+      #green {
+        background-color: green;
+      }
+      #black {
+        background-color: black;
+      }
+    </style>
   </head>
   <body>
     <div style="text-align: center; padding: 30px">
       <canvas id="demo-canvas" width="800" height="400" style="border: 1px solid black"></canvas>
-      <div>
-        <button id="clear">Clear</button>
-        <button id="undo">Undo</button>
-        <button id="redo">Redo</button>
-        <button id="save">Save</button>
+      <div class="tools-box">
+        <div>
+          <button id="clear">Clear</button>
+          <button id="undo">Undo</button>
+          <button id="redo">Redo</button>
+          <button id="save">Save</button>
+        </div>
+        <div class="colors-button">
+          <button id="black"></button>
+          <button id="red"></button>
+          <button id="green"></button>
+          <button id="blue"></button>
+        </div>
       </div>
     </div>
 

@@ -1,4 +1,4 @@
-/**@type {HTMLCanvasElement} */
+/**@type {HTMLCanvasElement}*/
 
 const canvas = document.getElementById("demo-canvas");
 const context = canvas.getContext("2d");
@@ -11,11 +11,11 @@ document.addEventListener("mouseup", (event) => {
 });
 canvas.onmousedown = function (event) {
   this.drawing = true;
-  DrawUtils.tip(event.offsetX, event.offsetY, true);
+  DrawUtils.tip(event.offsetX, event.offsetY, globalState.color, true);
 };
 canvas.onmousemove = function (event) {
   if (this.drawing) {
-    DrawUtils.line(event.offsetX, event.offsetY, true);
+    DrawUtils.line(event.offsetX, event.offsetY, globalState.color, true);
   }
 };
 canvas.onmouseup = function (event) {
@@ -37,10 +37,21 @@ document.getElementById("save").onclick = function () {
   window.location = document.getElementById("canvas").toDataURL("image/png");
 };
 
+const globalState = {
+  color: "black",
+  pen: "stroke",
+};
+
+document.querySelectorAll(".colors-button button").forEach((node) => {
+  node.onclick = function (event) {
+    globalState.color = node.id;
+  };
+});
 const DrawUtils = {
   actionsHistory: [],
   redoState: [],
-  tip: function (x, y, withRecord) {
+  tip: function (x, y, color, withRecord) {
+    context.strokeStyle = color;
     context.beginPath();
     context.arc(x, y, 0.8, 0, 2 * Math.PI);
     context.stroke();
@@ -50,11 +61,13 @@ const DrawUtils = {
         x,
         y,
         action: "tip",
+        color: globalState.color,
       });
       this.resetRedoState();
     }
   },
-  line: function (x, y, withRecord) {
+  line: function (x, y, color, withRecord) {
+    context.strokeStyle = color;
     context.lineTo(x, y);
     context.stroke();
     if (withRecord) {
@@ -62,6 +75,7 @@ const DrawUtils = {
         x,
         y,
         action: "line",
+        color: globalState.color,
       });
       this.resetRedoState();
     }
@@ -74,24 +88,23 @@ const DrawUtils = {
         x: null,
         y: null,
         action: "clear",
+        color: null,
       });
       this.resetRedoState();
     }
     // console.log(this.actionsHistory);
   },
   redraw: function () {
-    // console.log(this.actionsHistory);
-    // return;
     for (checkPoint of this.actionsHistory) {
       for (actionObj of checkPoint) {
-        const { x, y, action } = actionObj;
+        const { x, y, action, color } = actionObj;
         // console.log(x, y, action);
         switch (action) {
           case "tip":
-            this.tip(x, y);
+            this.tip(x, y, color);
             break;
           case "line":
-            this.line(x, y);
+            this.line(x, y, color);
             break;
           case "clear":
             this.clear();
@@ -105,7 +118,6 @@ const DrawUtils = {
     context.clearRect(0, 0, canvas.width, canvas.height);
     this.redoState.push(this.actionsHistory.pop());
     this.redraw();
-    console.log(this.redoState);
   },
   redo: function () {
     if (!this.redoState.length) return;
