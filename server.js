@@ -1,15 +1,15 @@
-const fs = require("fs");
-const http = require("http");
-http
-  .createServer((req, res) => {
-    let path = req.url;
-    if (req.url === "/") {
-      path = "/index.html";
-    }
-    fs.readFile("./static" + path, function (err, data) {
-      if (!err) {
-        res.end(data);
-      }
-    });
-  })
-  .listen(process.env.PORT || 4000);
+const express = require("express");
+
+const app = express();
+
+app.use(express.static("static"))
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/static/index.html");
+});
+app.get("/login", (req, res) => {
+  res.sendFile(__dirname + "/static/login.html");
+});
+app.get("/admin", (req, res) => {
+  res.sendFile(__dirname + "/static/admin.html");
+});
+app.listen(4000);

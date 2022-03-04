@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+    <style>
+      body {
+        height: 100%;
+        width: 100%;
+      }
+      form {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <div>Login: <input type="text" id="username" /></div>
+      <div>Password: <input type="password" id="password" /></div>
+      <button type="submit">Login</button>
+    </form>
+    <script>
+      document.querySelector("form").onsubmit = function (event) {
+        event.preventDefault();
+        const loginText = document.getElementById("username").value;
+        const loginPassword = document.getElementById("password").value;
+        //demo auth gate
+        if (loginText === "admin" && loginPassword == "admin") {
+          window.location.replace("/admin");
+        } else {
+          alert("Wrong username or password");
+        }
+      };
+    </script>
+  </body>
+</html>
