@@ -2,7 +2,7 @@ const express = require("express");
 
 const app = express();
 
-app.use(express.static("static"))
+app.use(express.static("static"));
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/static/index.html");
 });
@@ -12,4 +12,4 @@ app.get("/login", (req, res) => {
 app.get("/admin", (req, res) => {
   res.sendFile(__dirname + "/static/admin.html");
 });
-app.listen(4000);
+app.listen(process.env.PORT || 4000);
