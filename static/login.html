@@ -13,6 +13,10 @@
         left: 50%;
         transform: translateX(-50%);
       }
+      .error-text {
+        color: red;
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -20,18 +24,30 @@
       <div>Login: <input type="text" id="username" /></div>
       <div>Password: <input type="password" id="password" /></div>
       <button type="submit">Login</button>
+      <div class="error-text">Invalid credentials</div>
     </form>
     <script>
       document.querySelector("form").onsubmit = function (event) {
         event.preventDefault();
         const loginText = document.getElementById("username").value;
         const loginPassword = document.getElementById("password").value;
-        //demo auth gate
-        if (loginText === "admin" && loginPassword == "admin") {
-          window.location.replace("/admin");
-        } else {
-          alert("Wrong username or password");
-        }
+        fetch("/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: loginText,
+            password: loginPassword,
+          }),
+        }).then((res) => {
+          if (res.status == 401) {
+            document.querySelector(".error-text").style.display = "block";
+          } else {
+            //better be ok
+            window.location.replace("/admin");
+          }
+        });
       };
     </script>
   </body>

@@ -1,0 +1,11 @@
+two sections 
+- participant interface 
+- designer interface: 
+  + what is my database choice? - schema, a single survey, User & authorization 
+          + what is the schema for a survey
+
+
++ timer
++ multiple pages: force linearity
++ background
++ exporting data
