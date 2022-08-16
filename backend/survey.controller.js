@@ -11,7 +11,13 @@ exports.admin_get_all_surveys = async function (req, res) {
 
 exports.admin_get_survey = async function (req, res) {
   const surveyId = req.params.id;
+  var info = await Survey.findOne({_id: surveyId}).select("name isPublished questions");
+  console.log(info);
+  res.render("edit-survey", {
+    surveyInfo: info,
+  });
 };
+
 exports.admin_delete_survey_api = async function (req, res) {
   surveyId = req.params.id;
   const d = await Survey.deleteOne({

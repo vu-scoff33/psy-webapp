@@ -1,0 +1,31 @@
+extends admin-layout.pug
+
+mixin question(type, data, idx)
+  div(class="col-12 bg-light my-2 py-2 question-item")
+    label.form-label=idx+1
+    input(type="text" class="form-control" placeholder="Insert question title" value=data)
+
+block content 
+  //- - var surveyInfo = surveyInfo
+  - var surveyInfo = {name: "s1",questions: [{questionType: 'text', data: "question 1"}]}
+  .container.content-wrapper 
+    .row  
+      .col-12.text-end
+        button.btn.btn-primary#update-survey Save
+
+    form.row#survey-edit
+      .col-12  
+        label(for="surveyName" class="form-label") Survey Name: 
+        input(type="text" class="form-control" value=surveyInfo.name)
+      hr.my-2
+      .col-12.text-end
+        button.btn.btn-primary#add-question Add question
+
+      for q,index in surveyInfo.questions
+        +question(q.questionType, q.data, index)
+
+  template
+    +question("text", "", 0)
+
+block scripts
+  script(type="text/javascript" src="/admin/edit-survey.js")

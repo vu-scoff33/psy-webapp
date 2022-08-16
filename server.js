@@ -4,7 +4,12 @@ const cookieParser = require("cookie-parser");
 require("dotenv").config();
 const initialize = require("./models/intialize");
 const { auth_guard, login_api } = require("./backend/auth");
-const { admin_get_all_surveys, admin_create_survey_api } = require("./backend/survey.controller");
+const {
+  admin_get_all_surveys,
+  admin_create_survey_api,
+  admin_delete_survey_api,
+  admin_get_survey
+} = require("./backend/survey.controller");
 
 //configurations & third-party middleware
 const app = express();
@@ -32,6 +37,8 @@ app.post("/login", login_api);
 //api
 app.get("/admin", auth_guard, admin_get_all_surveys);
 app.post("/admin/create-survey", auth_guard, admin_create_survey_api);
+app.delete("/admin/delete-survey/:id", auth_guard, admin_delete_survey_api);
+app.get("/admin/surveys/:id", auth_guard, admin_get_survey);
 
 //Database
 const connectDB = async function () {
