@@ -37,6 +37,9 @@ exports.admin_create_survey_api = async function (req, res) {
   res.status(200).end();
 };
 
-exports.update_survey_api = async function (req, res) {};
+exports.update_survey_api = async function (req, res) {
+  
+
+};
 
 //TODO: manually throw error & see how to handle it

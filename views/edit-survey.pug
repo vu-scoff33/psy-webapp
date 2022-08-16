@@ -1,9 +1,11 @@
 extends admin-layout.pug
 
 mixin question(type, data, idx)
-  div(class="col-12 bg-light my-2 py-2 question-item")
-    label.form-label=idx+1
-    input(type="text" class="form-control" placeholder="Insert question title" value=data)
+  div(class="row bg-light my-2 p-2 question-item")
+    label.col-6.form-label=idx+1
+    div.col-6.text-end
+      button.btn.btn-close.delete-question-item
+    input(type="text" class="form-control col-12" required placeholder="Insert question title" value=data)
 
 block content 
   //- - var surveyInfo = surveyInfo
@@ -13,12 +15,12 @@ block content
       .col-12.text-end
         button.btn.btn-primary#update-survey Save
 
-    form.row#survey-edit
-      .col-12  
+    form#survey-edit
+      .div  
         label(for="surveyName" class="form-label") Survey Name: 
         input(type="text" class="form-control" value=surveyInfo.name)
       hr.my-2
-      .col-12.text-end
+      .div.text-end
         button.btn.btn-primary#add-question Add question
 
       for q,index in surveyInfo.questions
