@@ -1,4 +1,6 @@
 const jwt = require("jsonwebtoken");
+const path = require("path");
+const { dirname } = require("path");
 const User = require("../models/User");
 
 exports.login_api = async function (req, res) {
@@ -20,11 +22,11 @@ exports.login_api = async function (req, res) {
 exports.auth_guard = function (req, res, next) {
   const token = req.cookies.jwt_token;
   if (!token) {
-    return res.status(401).end();
+    return res.redirect("/login");
   }
   jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
     if (err) {
-      return res.status(401).end();
+      return res.redirect("/login");
     }
     next();
   });

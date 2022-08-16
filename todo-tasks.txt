@@ -1,0 +1,8 @@
+1. simple admin UI to create & update survey: delete & 
+
+
+
+
+
+Later: 
+- pre-compiled pug. webpack

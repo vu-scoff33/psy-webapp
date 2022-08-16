@@ -1,0 +1,26 @@
+extends admin-layout.pug 
+
+block content 
+  - var surveys = [{name: "survey 1", id: 1, isPublished: false}, {name: "survey 2", id: 2, isPublished: true}]
+  div.container
+    .row  
+      .col-12.text-end
+        button.btn.btn-primary#add-survey Add new survey
+    
+    if surveys.length == 0
+      .row
+        .col-12.text-center  
+          p.fw-light.fst-italic There are no surveys created.
+    else
+      for item in surveys
+        .row.survey-item.py-2.mt-2.bg-light
+          .col-8 
+            p.item-name #{item.name}
+          .col-4.text-right
+            button(class="btn btm-sm btn-light edit-survey" data-survey-id=item.id) Edit
+            button(class="btn btn-sm btn-danger ms-1 delete-survey" data-survey-id=item.id) Delete
+            span.fw-light.fst-italic.ms-2= item.isPublished ? "published" : ""
+
+
+block scripts 
+  script(type="text/javascript" src="/admin/admin.js")

@@ -9,3 +9,17 @@ two sections
 + multiple pages: force linearity
 + background
 + exporting data
+
+
+complications when you decide to modify the survey mid-way.
+
+
+***API Descriptions****
+
+1. Participant perspective: 
+- The overall layout & configurations 
+
+
+
+
+
