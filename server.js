@@ -8,7 +8,10 @@ const {
   admin_get_all_surveys,
   admin_create_survey_api,
   admin_delete_survey_api,
-  admin_get_survey
+  admin_get_survey,
+  admin_update_survey_api,
+  admin_publish_survey_api,
+  participant_get_survey
 } = require("./backend/survey.controller");
 
 //configurations & third-party middleware
@@ -39,6 +42,13 @@ app.get("/admin", auth_guard, admin_get_all_surveys);
 app.post("/admin/create-survey", auth_guard, admin_create_survey_api);
 app.delete("/admin/delete-survey/:id", auth_guard, admin_delete_survey_api);
 app.get("/admin/surveys/:id", auth_guard, admin_get_survey);
+app.post("/admin/surveys/:id", auth_guard, admin_update_survey_api);
+app.post("/admin/surveys/publish/:id", auth_guard, admin_publish_survey_api)
+
+
+//participant section
+app.get("/surveys/:id", participant_get_survey);
+app.post("/surveys/:id", )
 
 //Database
 const connectDB = async function () {

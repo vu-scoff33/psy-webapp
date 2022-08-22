@@ -1,8 +1,6 @@
 two sections 
 - participant interface 
 - designer interface: 
-  + what is my database choice? - schema, a single survey, User & authorization 
-          + what is the schema for a survey
 
 
 + timer
@@ -10,6 +8,7 @@ two sections
 + background
 + exporting data
 
+? should designer be allowed to modify a survey when it already has responses
 
 complications when you decide to modify the survey mid-way.
 

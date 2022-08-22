@@ -1,15 +1,13 @@
-const surveyItems = document.getElementsByClassName("survey-item");
+// const surveyItems = document.getElementsByClassName("survey-item");
 
 document.querySelector("#add-survey").onclick = function (e) {
-  const idx = surveyItems.length + 1;
-  const surveyName = "Survey " + idx.toString();
   fetch("/admin/create-survey", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      name: surveyName,
+      name: "Untitled Survey",
     }),
   }).then((res) => {
     location.reload();

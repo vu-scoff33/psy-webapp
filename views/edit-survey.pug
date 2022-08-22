@@ -1,33 +1,72 @@
 extends admin-layout.pug
 
-mixin question(type, data, idx)
-  div(class="row bg-light my-2 p-2 question-item")
-    label.col-6.form-label=idx+1
+block styles 
+  style. 
+    button.add-option {
+      border: 1px dashed;
+    }
+
+
+mixin mcqOption(data, idx)
+  .d-flex
+    button(class="btn btn-light bt-sm me-2" type="button" tabIndex="-1" disabled=surveyInfo.isPublished onclick="deleteOptionHandler(event)")
+      i(class="fa-solid fa-minus text-danger")    
+    input(type="text" class="mcq-option form-control form-control-sm my-1 w-50" disabled=surveyInfo.isPublished data-id=idx value=data)
+
+mixin question(type, q, idx)
+  div(class="row bg-light my-2 p-2 question-item" data-type=type)
+    div.col-6
+      label.form-label=idx+1
+      span.ms-2=questionTypes[type]
     div.col-6.text-end
-      button.btn.btn-close.delete-question-item
-    input(type="text" class="form-control col-12" required placeholder="Insert question title" value=data)
+      button(class="btn btn-close delete-question-item" type="button" disabled=surveyInfo.isPublished)
+    input(type="text" disabled=surveyInfo.isPublished class="form-control question-title col-12" required placeholder="Insert question title" value=q ? q.title : "")
+
+    div.extras-wrapper
+    if type == "mcq"
+      hr.my-2
+      for o, idx in q ? q.options : []
+        +mcqOption(o, idx)
+      button(class="btn btn-light my-2 add-option" type="button" onclick="addOptionHandler(event)" disabled=surveyInfo.isPublished) Add option
+
 
 block content 
-  //- - var surveyInfo = surveyInfo
-  - var surveyInfo = {name: "s1",questions: [{questionType: 'text', data: "question 1"}]}
+  - var surveyInfo = surveyInfo
+  - const questionTypes = {"text": "Text", "mcq": "Multiple Choice", "canvas": "Drawing Task"}
   .container.content-wrapper 
     .row  
       .col-12.text-end
-        button.btn.btn-primary#update-survey Save
+        button(type="submit" form="survey-edit" class="btn btn-primary me-2" id="update-survey") Save
+        if !surveyInfo.isPublished 
+          button(class="btn btn-secondary" id="publish" onclick="publishHandler(event)") Publish
+        else 
+          button(class="btn btn-secondary" id="unpublish" onclick="publishHandler(event)") Unpublish
 
-    form#survey-edit
+    form(id="survey-edit" data-survey-id=surveyInfo._id)
       .div  
         label(for="surveyName" class="form-label") Survey Name: 
-        input(type="text" class="form-control" value=surveyInfo.name)
+        input(type="text" id="surveyName" disabled=surveyInfo.isPublished class="form-control" value=surveyInfo.name)
       hr.my-2
-      .div.text-end
-        button.btn.btn-primary#add-question Add question
+      .div.text-end.dropdown
+        button(class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" disabled=surveyInfo.isPublished) Add question
+        ul.dropdown-menu#add-question-wrapper
+          for q in questionTypesEnum
+            li
+              a(class="dropdown-item add-question" id=q) #{questionTypes[q]}
+
 
       for q,index in surveyInfo.questions
-        +question(q.questionType, q.data, index)
+        +question(q.questionType, q, index)
 
-  template
-    +question("text", "", 0)
+  for e in questionTypesEnum
+    template(id=e)
+      +question(e, NULL, -1)
+  
+  template(id="mcq-option")
+    +mcqOption("", 0)
+    
 
 block scripts
+  script(type="text/javascript").   
+    var questionTypes = !{JSON.stringify(questionTypes)};
   script(type="text/javascript" src="/admin/edit-survey.js")

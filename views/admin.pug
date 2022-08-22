@@ -18,8 +18,8 @@ block content
           .col-8 
             p.item-name #{item.name}
           .col-4.text-right
-            a(href=url class="btn btm-sm btn-light edit-survey" data-survey-id=item.id) Edit
-            button(class="btn btn-sm btn-danger ms-1 delete-survey" data-survey-id=item.id) Delete
+            a(href=url class="btn btm-sm btn-light edit-survey" data-survey-id=item._id) Edit
+            button(class="btn btn-sm btn-danger ms-1 delete-survey" data-survey-id=item._id) Delete
             span.fw-light.fst-italic.ms-2= item.isPublished ? "published" : ""
 
 

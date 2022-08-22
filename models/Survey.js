@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const surveyQuestionEnum = ["text", "mcq", "canvas"];
 
 //TODO: question & answer structures
-
 const responseSchema = new mongoose.Schema(
   {
     studentId: String,
@@ -14,7 +13,11 @@ const responseSchema = new mongoose.Schema(
           required: true,
           enum: surveyQuestionEnum,
         },
-        data: String,
+        text: String,
+        selectedOptions: [mongoose.Schema({
+          idx: Number, 
+          option: String
+        })],
         image: Buffer,
       },
     ],
@@ -31,8 +34,8 @@ const surveySchema = new mongoose.Schema({
     required: true,
   },
   isPublished: {
-    type: Boolean, 
-    default: false
+    type: Boolean,
+    default: false,
   },
   questions: [
     mongoose.Schema({
@@ -41,7 +44,8 @@ const surveySchema = new mongoose.Schema({
         required: true,
         enum: surveyQuestionEnum,
       },
-      data: String,
+      title: String,
+      options: [String],
       image: Buffer,
     }),
   ],

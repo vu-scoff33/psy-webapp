@@ -24,27 +24,46 @@
       #black {
         background-color: black;
       }
+      .noselect{
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
     </style>
   </head>
   <body>
     <div style="text-align: center; padding: 30px">
       <canvas id="demo-canvas" width="800" height="400" style="border: 1px solid black"></canvas>
-      <div class="tools-box">
+      <div class="tools-box noselect">
         <div>
-          <button id="clear">Clear</button>
-          <button id="undo">Undo</button>
-          <button id="redo">Redo</button>
-          <button id="save">Save</button>
-        </div>
-        <div class="colors-button">
-          <button id="black"></button>
-          <button id="red"></button>
-          <button id="green"></button>
-          <button id="blue"></button>
+          <button id="demo-canvas-clear">Clear</button>
+          <button id="demo-canvas-undo">Undo</button>
+          <button id="demo-canvas-redo">Redo</button>
+          <button id="demo-canvas-save">Save</button>
         </div>
       </div>
     </div>
 
-    <script src="./main.js"></script>
+    <div style="text-align: center; padding: 30px">
+      <canvas id="demo-canvas-2" width="800" height="400" style="border: 1px solid black"></canvas>
+      <div class="tools-box noselect">
+        <div>
+          <button id="demo-canvas-2-clear">Clear</button>
+          <button id="demo-canvas-2-undo">Undo</button>
+          <button id="demo-canvas-2-redo">Redo</button>
+          <button id="demo-canvas-2-save">Save</button>
+        </div>
+      </div>
+    </div>
+    
+    <script src="./canvas.js"></script>
+    <script>
+      const cv = DrawingCanvas("demo-canvas");
+      const cv2 = DrawingCanvas("demo-canvas-2")
+    </script>
   </body>
 </html>
