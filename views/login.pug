@@ -1,0 +1,39 @@
+extends admin-layout.pug 
+
+block content 
+  .container.h-75.d-flex.align-items-center
+    form.login-form.w-25.mx-auto.row
+      .col-12.p-1
+        input(type="text" id="username" class="form-control" placeholder="Username")
+      .col-12.p-1
+        input(type="password" id="password" class="form-control" placeholder="Password")
+
+      p.text-danger.fs-6.d-none.error-text Invalid credentials
+      .col-12.text-end.py-2 
+        button.btn.btn-primary Login
+
+block scripts
+  script. 
+    document.querySelector("form").onsubmit = function (event) {
+        event.preventDefault();
+        const loginText = document.getElementById("username").value;
+        const loginPassword = document.getElementById("password").value;
+        fetch("/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: loginText,
+            password: loginPassword,
+          }),
+        }).then((res) => {
+          if (res.status == 401) {
+            document.querySelector(".error-text").classList.remove("d-none");
+          } else {
+            //better be ok
+            window.location.replace("/admin");
+          }
+        });
+      };
+    

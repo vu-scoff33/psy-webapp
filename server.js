@@ -33,7 +33,7 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/static/index.html");
 });
 app.get("/login", (req, res) => {
-  res.sendFile(__dirname + "/static/login.html");
+  res.render("login");
 });
 app.post("/login", login_api);
 
